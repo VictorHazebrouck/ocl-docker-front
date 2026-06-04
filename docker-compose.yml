@@ -1,0 +1,7 @@
+name: "Olympic Participation Tracker"
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 80:80
