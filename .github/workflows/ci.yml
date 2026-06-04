@@ -9,6 +9,10 @@ permissions:
   checks: write
   pull-requests: write
 
+env:
+  IMAGE_NAME: ${{ github.repository }}
+  TAG: ${{ github.ref_name }}-${{ github.sha }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
