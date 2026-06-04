@@ -44,3 +44,30 @@ jobs:
         if: always()
         with:
           files: test-results/**/*.xml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ GITHUB_TOKEN }}
+
+      - name: Build frontend image
+        run: |
+          docker build -t frontend:latest .
+
+      - name: Tag frontend image
+        run: |
+          docker tag frontend:latest ghcr.io/${IMAGE_NAME}:${TAG}
+
+      - name: Push frontend image
+        run: |
+          docker push ghcr.io/${IMAGE_NAME}:${TAG}
