@@ -112,10 +112,11 @@ jobs:
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --plugins \
-          @semantic-release/commit-analyzer \
-          @semantic-release/release-notes-generator \
-          @semantic-release/github'
+        run: |
+          npx semantic-release \
+            --plugins @semantic-release/commit-analyzer \
+            --plugins @semantic-release/release-notes-generator \
+            --plugins @semantic-release/github
 
       - name: Login to GHCR
         if: steps.semantic.outputs.new_release_published == 'true'
